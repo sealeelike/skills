@@ -12,9 +12,9 @@ tcp调参skill。
 A measurement-driven agent skill that audits, benchmarks, and safely tunes remote Linux TCP nodes over SSH.
 
 - 先测全再调
-- 边调边测，找到最佳值
+- 多次测试，找到最佳值
 - 覆盖多项参数：`congestion control`, `qdisc`, `socket buffers`, `initial windows`, `reordering/recovery`, `MTU/MSS`, and `connection-rate knobs`
-- 呈现修改项以及相应实测增益
+- 交付修改项以及相应实测增益
 - 有备份，可回滚
 
 [audit-tune-tcp-node](audit-tune-tcp-node/)
