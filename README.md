@@ -9,7 +9,8 @@
 > [!CAUTION]
 > This skill requires you to provide your agent with an SSH login method that has sudo privileges.
 
-tcp调参skill。先
+tcp调参skill。
+A measurement-driven agent skill that audits, benchmarks, and safely tunes remote Linux TCP nodes over SSH.
 
 ---
 
