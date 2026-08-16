@@ -15,7 +15,7 @@ A measurement-driven agent skill that audits, benchmarks, and safely tunes remot
 - 多次测试，找到最佳值
 - 覆盖多项参数：`congestion control`, `qdisc`, `socket buffers`, `initial windows`, `reordering/recovery`, `MTU/MSS`, and `connection-rate knobs`
 - 交付修改项以及相应实测增益
-- 有备份，可回滚
+- 参数有快照，可回滚
 
 [audit-tune-tcp-node](audit-tune-tcp-node/)
 
