@@ -22,7 +22,7 @@ A measurement-driven agent skill that audits, benchmarks, and safely tunes remot
 Prompt your agent:
 
 ```
-I want to try this skill. https://github.com/sealeelike/skills.
+I want to try this skill. https://github.com/sealeelike/skills/tree/main/audit-tune-tcp-node
 ```
 
 ---
