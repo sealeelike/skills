@@ -17,7 +17,13 @@ A measurement-driven agent skill that audits, benchmarks, and safely tunes remot
 - 交付修改项以及相应实测增益
 - 参数有快照，可回滚
 
-[audit-tune-tcp-node](audit-tune-tcp-node/)
+## Quickstart
+
+Prompt your agent:
+
+```
+I want to try this skill. Clone https://github.com/sealeelike/skills and install audit-tune-tcp-node from it.
+```
 
 ---
 
