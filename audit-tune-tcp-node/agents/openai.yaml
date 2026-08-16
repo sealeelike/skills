@@ -1,0 +1,4 @@
+interface:
+  display_name: "TCP 节点审计与调优"
+  short_description: "通过 SSH 审计、压测并安全调优 Linux TCP 节点"
+  default_prompt: "使用 $audit-tune-tcp-node 通过 SSH 审计并安全调优这个 Linux 节点。"
