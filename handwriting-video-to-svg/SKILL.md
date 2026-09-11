@@ -38,7 +38,7 @@ The complete end-to-end converter script is stored at:
 
 ### Basic Usage
 ```bash
-python3 /home/sealee/.pi/agent/skills/handwriting-video-to-svg/scripts/video_to_svg_anim.py <input_video.mp4> [output.html] [--bundle output-bundle.js] [--fps 24] [--speed 1.8]
+python3 <skill_dir>/scripts/video_to_svg_anim.py <input_video.mp4> [output.html] [--bundle output-bundle.js] [--fps 24] [--speed 1.8]
 ```
 
 ### Generated Artifacts
