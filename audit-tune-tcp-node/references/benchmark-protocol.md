@@ -78,6 +78,44 @@ curl --noproxy '*' -F -sS --connect-timeout 5 --max-time 20 \
 Feed the TSV to `scripts/summarize-shortflows.py`. Prefer A/B/A or alternating runs when the
 route is variable. Compare median and p95, not only mean throughput.
 
+### Concurrent Cold-Start / Burst A/B (Multi-Stream Short-Flows)
+
+On constrained short-haul routes (<= 50 Mbps) or interactive multi-connection nodes, isolated
+serial curls fail to reflect client cold starts. Run concurrent short-flow bursts using standard
+tools (`xargs -P`):
+
+```bash
+# 8 concurrent requests pulling 128 KiB objects (simulating multi-asset / feed cold start)
+seq 8 | xargs -n 1 -P 8 -I {} curl --noproxy '*' -sS \
+  -o /dev/null \
+  -w 'BURST_P8\t128k\t{}\t%{time_connect}\t%{time_starttransfer}\t%{time_total}\t%{speed_download}\n' \
+  http://HOST:PORT/128k
+```
+
+Key observations during concurrent bursts:
+1. **Wall-clock completion**: Did all 8 streams finish within 1–2 RTTs, or did some stall for 2–4s?
+2. **Kernel reordering and collapse**: Check sender `ss -ti 'sport = :PORT'` for `reord_seen`
+   and whether `cwnd` was halved (CUBIC) or maintained near target (BBR).
+3. Pipe the output to `scripts/summarize-shortflows.py` to compare concurrent p95 tail latencies
+   between CUBIC and BBR.
+
+## Pacing-Cap and Shaper A/B
+
+When the classification says the host is over-running a policer (flat RTT under load,
+retransmissions confined to connection start, real loss not reordering), A/B the egress release
+ceiling rather than the advertised rate:
+
+```bash
+tc qdisc change dev eth0 root fq maxrate 150mbit    # other arms: 200mbit, 250mbit, unlimited
+```
+
+Interleave the arms round by round (at least three rounds each), and alongside throughput record
+per arm: the sender's `ss -tin` state, `/proc/net/netstat` deltas, and RTT/jitter under load.
+Keep the highest ceiling that removes the retransmissions. A loss win is not enough on its own:
+report the latency check (EDT pacing must not add a queue) and the short-flow median/p95 so a
+capacity or tail regression cannot hide behind it. If loss does not fall as the cap falls, the
+loss is not the host's — stop and persist nothing.
+
 ## Validation
 
 After tuning, repeat:
